@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Mic, MoreHorizontal, X } from "lucide-react";
 import { cn } from "@/utils";
 import { useVoice } from "@humeai/voice-react";
-
+import CustomCursor from "@/app/CustomCursor";
 
 export default function AudioVisualizer({
   audioData,
@@ -25,7 +25,6 @@ export default function AudioVisualizer({
     } else setMode("circles");
   }, [isPlaying]);
 
-
   const toggleMode = (mode: string) => {
     setIsListening(!isListening);
     if (!isListening) {
@@ -37,7 +36,7 @@ export default function AudioVisualizer({
       setMode("circles");
     }
   };
- 
+
   useEffect(() => {
     if (isPlaying) {
       setMode("pills");
@@ -53,7 +52,7 @@ export default function AudioVisualizer({
       if (connected === "disconnected") return `middle`;
       return `${!isPlaying ? "animate-radiate" : ""} h-16 w-16`;
     }
-  
+
     if (i === 1) {
       if (connected === "disconnected") return `inner-1`;
       // return `-translate-x-[20px]`;
@@ -71,12 +70,12 @@ export default function AudioVisualizer({
       // return `translate-x-[40px]`;
     }
   }
-  
+
   function playingClass(i: number) {
     // if (i === 2) {
     //   return `animate-radiate h-16 w-16`;
     // }
-  
+
     if (i === 1) {
       return `-translate-x-[20px]`;
     }
@@ -90,22 +89,21 @@ export default function AudioVisualizer({
       return `translate-x-[40px]`;
     }
   }
-  
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white">
       <div className="relative  h-full w-full">
         <div
-          className={`${ "flex justify-center items-center" } 
-          ${status.value !== "disconnected"  ? "gap-[20px]" : ""} 
-           ${status.value === "disconnected" && "outer"}`}
-           onClick={() => {
+          className={`${"flex justify-center items-center group hover:cursor-none w-1/2 m-auto h-[40vh]"} 
+          ${status.value !== "disconnected" ? "gap-[20px]" : ""} 
+           ${status.value === "disconnected" && "outer "}`}
+          onClick={() => {
             if (status.value === "disconnected") {
               connect();
+            } else {
+              disconnect();
             }
-          }
-
-           }
+          }}
         >
           {/* <div className="relative "> */}
           {audioData.map((_, index) => {
@@ -128,16 +126,15 @@ export default function AudioVisualizer({
                       ? "bg-neutral-500"
                       : isMiddle
                       ? "bg-neutral-500"
-                       
                       : "bg-gray-800"
-                    : "bg-black"
+                    : "bg-neutral-900"
                 )}
                 style={
                   status.value === "disconnected"
                     ? {}
                     : {
                         animationDelay: `${index * 0.1}s`,
-                        
+
                         // transform: `translateX(${playingClass(index)})`,
                         // scale: `${isPlaying ? scale : 1}`,
                         height: `${
@@ -148,39 +145,14 @@ export default function AudioVisualizer({
               />
             );
           })}
+          <CustomCursor />
+          <Mic className={`cur hidden group-hover:block   `} />
+          {/* <img src="/mic.svg" className="cur hidden group-hover:block h-10 w-10"/> */}
         </div>
         {/* </div> */}
       </div>
 
-      <div className="mt-44 flex gap-2">
-        {/* <button
-        //   onClick={toggleMode}
-        //   className={cn(
-        //     "rounded-md p-2 text-white transition-colors",
-        //     isListening
-        //       ? "bg-white/20 text-white"
-        //       : "bg-gray-800 hover:bg-gray-700"
-        //   )}
-        // >
-        //   <Mic className="h-5 w-5" />
-        // </button> */}
-        <button className="rounded-md bg-gray-800 p-2 text-white hover:bg-gray-700">
-          <MoreHorizontal className="h-5 w-5" />
-        </button>
-        <button className="rounded-md bg-red-900/50 p-2 text-red-500 hover:bg-red-900/70">
-          <X className="h-5 w-5" />
-        </button>
-        <button
-          className="bg-white "
-          onClick={async () => {
-            if (status.value === "disconnected") {
-              await connect();
-            } else if (status.value == "connected") disconnect();
-          }}
-        >
-          {status.value}
-        </button>
-      </div>
+      
 
       {/* <Audio/> */}
     </div>

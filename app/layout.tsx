@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 import { cn } from "@/utils";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Hume AI visualizer",
@@ -26,6 +27,7 @@ export default function RootLayout({
       >
 
         {children}
+        <Script src="./cursor.js" strategy="afterInteractive"/>
       </body>
     </html>
   );

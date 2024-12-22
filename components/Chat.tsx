@@ -80,6 +80,8 @@
 import { useEffect, useState, useRef } from "react";
 import AudioVisualizer from "../components/AudioVisualizer";
 import { AudioOutputMessage, useVoice, VoiceProvider } from "@humeai/voice-react";
+import CustomCursor from "@/app/CustomCursor";
+import { Mic } from "lucide-react";
 
 export default function Chat({ accessToken }: { accessToken: string }) {
   const configId = process.env["NEXT_PUBLIC_HUME_CONFIG_ID"];
@@ -133,10 +135,11 @@ export default function Chat({ accessToken }: { accessToken: string }) {
       configId={configId}
       onAudioReceived={(message: AudioOutputMessage) => handleAudioReceived(message)}
     >
-      <div className="p-4">
-        <h1 className="text-white text-lg">Audio Visualizer</h1>
+      {/* <div className="p-4"> */}
+        
         <AudioVisualizer audioData={audioData} />
-      </div>
+      {/* </div> */}
+      
     </VoiceProvider>
   );
 }
