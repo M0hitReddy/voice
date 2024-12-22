@@ -56,19 +56,19 @@ export default function AudioVisualizer({
   
     if (i === 1) {
       if (connected === "disconnected") return `inner-1`;
-      return `-translate-x-[20px]`;
+      // return `-translate-x-[20px]`;
     }
     if (i === 3) {
       if (connected === "disconnected") return `inner-2`;
-      return `translate-x-[20px]`;
+      // return `translate-x-[20px]`;
     }
     if (i == 0) {
       if (connected === "disconnected") return `outer-1`;
-      return `-translate-x-[40px]`;
+      // return `-translate-x-[40px]`;
     }
     if (i == 4) {
       if (connected === "disconnected") return `outer-2`;
-      return `translate-x-[40px]`;
+      // return `translate-x-[40px]`;
     }
   }
   
@@ -97,7 +97,7 @@ export default function AudioVisualizer({
       <div className="relative  h-full w-full">
         <div
           className={`${ "flex justify-center items-center" } 
-          ${status.value !== "disconnected" && isPlaying ? "gap-[20px]" : ""} 
+          ${status.value !== "disconnected"  ? "gap-[20px]" : ""} 
            ${status.value === "disconnected" && "outer"}`}
            onClick={() => {
             if (status.value === "disconnected") {
